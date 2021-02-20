@@ -152,7 +152,7 @@ class Game {
         this.graphics = undefined;
         this.text = undefined;
         addEventListener('keydown', (e) => this.keydown(e));
-        addEventListener('click', (e) => this.click(e));
+        addEventListener('touchend', (e) => this.touch(e));
         this.redraw();
         window.onresize = () => this.redraw();
     }
@@ -217,7 +217,7 @@ class Game {
         }
         this.redraw();
     }
-    click(event) {
+    touch(event) {
         if (this.state === 'gameover') {
             return;
         }
@@ -225,8 +225,8 @@ class Game {
             this.startGame();
             return;
         }
-        const dx = (event.clientX - window.innerWidth / 2) / WIDTH_BLOCKS;
-        const dy = (event.clientY - window.innerHeight / 2) / HEIGHT_BLOCKS;
+        const dx = (event.changedTouches[0].pageX - window.innerWidth / 2) / WIDTH_BLOCKS;
+        const dy = (event.changedTouches[0].pageY - window.innerHeight / 2) / HEIGHT_BLOCKS;
         if (Math.abs(dx) < Math.abs(dy)) {
             // top or bottom of screen were pressed
             if (dy < 0) {
